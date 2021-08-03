@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/khaninejad/nodejs-simpleMicroservice/issues"
   },
-  "homepage": "https://github.com/khaninejad/nodejs-simpleMicroservice#readme"
+  "homepage": "https://github.com/khaninejad/nodejs-simpleMicroservice#readme",
+  "dependencies": {
+    "async": "^3.2.0",
+    "redis": "^3.1.2"
+  }
 }
