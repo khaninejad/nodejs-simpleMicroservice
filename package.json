@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "register" : "node src/register/register.js loop=1000 sleep=500",
+    "service": "node src/service/accountService.js",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
