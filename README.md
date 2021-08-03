@@ -1,2 +1,2 @@
-# nodejs-simpleMicroservice
-# nodejs-simpleMicroservice
+# Simple microservice using redis stream
+
