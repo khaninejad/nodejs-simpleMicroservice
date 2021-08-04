@@ -1,20 +1,30 @@
-
-var connect = {
+var redis = require('redis');
+var config = require('../config/config')
+var Connector = {
     _redis: null,
+
+    /**
+     * @return {null}
+     */
     redis: function () {
-        if(connect._redis == null){
-            var redis = require('redis');
-            connect._redis = redis.createClient("6379", "127.0.0.1");
-            connect._redis.select("local",function(error,response){
+        if(Connector._redis == null){
+            
+            Connector._redis = redis.createClient(config.redis.port, config.redis.host);
+            Connector._redis.select(config.redis.db,function(err,resp){
+                //console.log(resp);
             });
 
-            connect._redis.on('error', function(error) {
-                console.log('Error Connecting: '+error);
+             Connector._redis.on('error', function(err) {
+                console.log('Error Connecting: '+err);
+            });
+
+            Connector._redis.on('exit', function(err) {
+                Connector.quit();
             });
         }
-        return connect._redis;
+        return Connector._redis;
     }
 };
 
 
-module.exports = connect;
+module.exports = Connector;
