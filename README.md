@@ -4,6 +4,7 @@
   
 
 ![example workflow](https://github.com/khaninejad/nodejs-simpleMicroservice/workflows/Node.js%20CI/badge.svg)
+
 Make sure that you installed the [Redis](https://redis.io/)
 
 Install dependencies:
