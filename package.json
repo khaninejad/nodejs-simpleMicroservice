@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "register" : "node src/register/register.js loop=1000 sleep=500",
+    "register": "node src/register/register.js loop=1000 sleep=500",
     "service": "node src/service/accountService.js",
-    "test": "jest"
+    "test": "jest --forceExit"
   },
   "repository": {
     "type": "git",
@@ -21,7 +21,8 @@
   "homepage": "https://github.com/khaninejad/nodejs-simpleMicroservice#readme",
   "dependencies": {
     "async": "^3.2.0",
-    "redis": "^3.1.2"
+    "redis": "^3.1.2",
+    "validator": "^13.6.0"
   },
   "devDependencies": {
     "jest": "^27.0.6"
