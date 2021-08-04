@@ -5,6 +5,11 @@ var config = {
         password: "",
         db: "local",
         socket: ""
+    },
+    stream: {
+        STREAMS_KEY: "simpleMicroservice",
+        APPLICATION_ID: "iot_application:node_1",
+        CONSUMER_ID: "consumer:1"
     }
 };
 

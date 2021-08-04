@@ -3,25 +3,16 @@
 var async = require('async');
 var redisStream = require('redis');
 var User = require('../user/user.js');
+var config = require('../config/config.js');
 
 var redisClient = redisStream.createClient();
 
-const STREAMS_KEY = "simpleMicroservice";
-const APPLICATION_ID = "iot_application:node_1";
-var CONSUMER_ID = "consumer:1"
 
-// User.add_user({
-//     firstname: "hello",
-//     lastname: "vvv",
-//     email: "hello@hello.com"
-// }, function(err){
-//     console.log(err);
-// })
 // create the group
-redisClient.xgroup("CREATE", STREAMS_KEY, APPLICATION_ID, '$', function(err) {
+redisClient.xgroup("CREATE", config.stream.STREAMS_KEY, config.stream.APPLICATION_ID, '$', function(err) {
     if (err) {
         if (err.code == 'BUSYGROUP' ) {
-            console.log(`Group ${APPLICATION_ID} already exists`);
+            console.log(`Group ${config.stream.APPLICATION_ID} already exists`);
         } else {
             console.log(err);
             process.exit();    
@@ -31,7 +22,7 @@ redisClient.xgroup("CREATE", STREAMS_KEY, APPLICATION_ID, '$', function(err) {
 
 async.forever(
     function(next) {
-        redisClient.xreadgroup('GROUP', APPLICATION_ID, CONSUMER_ID, 'BLOCK', 500, 'STREAMS',  STREAMS_KEY , '>', function (err, stream) {
+        redisClient.xreadgroup('GROUP', config.stream.APPLICATION_ID, config.stream.CONSUMER_ID, 'BLOCK', 500, 'STREAMS',  config.stream.STREAMS_KEY , '>', function (err, stream) {
             if (err) {
                 console.error(err);
                 next(err);

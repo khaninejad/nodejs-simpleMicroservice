@@ -2,9 +2,10 @@
 
 var redis = require('redis');
 var redisClient = redis.createClient();
+var config = require('../config/config.js');
 
 
-const STREAMS_KEY = "simpleMicroservice";
+
 
 
 function sleep(millis) {
@@ -47,7 +48,7 @@ const { email, firstname , lastname} = argv;
 
         console.log(`\tSending message`);
 
-        redisClient.xadd(STREAMS_KEY, '*', 
+        redisClient.xadd(config.stream.STREAMS_KEY, '*', 
         'email',email,
         'firstname',firstname,
         'lastname',lastname,
