@@ -3,7 +3,8 @@
 var redis = require('redis');
 var redisClient = redis.createClient();
 
-const STREAMS_KEY = "weather_sensor:wind";
+
+const STREAMS_KEY = "simpleMicroservice";
 
 
 function sleep(millis) {
@@ -11,54 +12,54 @@ function sleep(millis) {
 }
 
 async function main() {
-    
-    // capture the paramter
-    const args = process.argv
-    .slice(2)
-    .map(arg => arg.split('='))
-    .reduce((args, [value, key]) => {
-        args[value] = key;
-        return args;
-    }, {});
+     
+    var sleep_time = 500;
 
-    var sleep_time = 200;
-    var loop_nb = 20;
-    if (args && args.loop && !isNaN(args.loop)) {
-        loop_nb = args.loop;
-    }
+    var { argv } = require("yargs")
+    .scriptName("Simple Microservice")
+  .usage("Usage: npm run register {args}")
+  .example(
+    "node src/register/register.js --email=\"khaninejad@gmail.com\" --firstname=\"Payam\" --lastname=\"Khaninejad\""
+  )
+  .option("email", {
+    alias: "Email adress",
+    describe: "Used for user identity",
+    demandOption: "The email is required.",
+    type: "string",
+    nargs: 1,
+  })
+  .option("firstname", {
+    alias: "FirstName",
+    describe: "The user firstname",
+    demandOption: "The firstname is required.",
+    type: "string",
+    nargs: 1,
+  })
+  .option("lastname", {
+    alias: "LastName",
+    describe: "The user lastname",
+    demandOption: "The lastname is required.",
+    type: "string",
+    nargs: 1,
+  });
 
-    if (args && args.sleep && !isNaN(args.sleep)) {
-        sleep_time = args.sleep;
-    }
+const { email, firstname , lastname} = argv;
 
-    console.log(`\nThis program will send ${loop_nb} messages, every ${sleep_time}ms`);
+        console.log(`\tSending message`);
 
-    for (var i = 0 ; i <= loop_nb ; i++) {
-        console.log(`\tSending message ${i}`);
-
-        // create the message values:
-        var speed = Math.round(Math.random() * 45);
-        var direction = Math.round(Math.random() * 359);
-        var ts = (new Date()).getTime();
-
-        // produce the message
         redisClient.xadd(STREAMS_KEY, '*', 
-        'speed', speed,  
-        'direction', direction,  
-        'sensor_ts', ts, 
-        'loop_info', i,  
-        'message','Hello'+ts,
+        'email',email,
+        'firstname',firstname,
+        'lastname',lastname,
         function (err) { 
                 if (err) { console.log(err) };
             });
 
         await sleep(sleep_time);
+        process.exit()
 
-        if (i == loop_nb) {
-            process.exit()
-        }
     
-    }
+    
 }
 
 main();

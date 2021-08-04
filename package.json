@@ -22,7 +22,8 @@
   "dependencies": {
     "async": "^3.2.0",
     "redis": "^3.1.2",
-    "validator": "^13.6.0"
+    "validator": "^13.6.0",
+    "yargs": "^16.2.0"
   },
   "devDependencies": {
     "jest": "^27.0.6"
