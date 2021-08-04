@@ -4,9 +4,11 @@ var redis = require('../redis/redis.js');
 
 
 afterEach(() => {
-    redis.delete_all("local")
+    redis.delete_all()
   });
 
+
+ 
   
 test('Check result is json', (done) => {
     const user = {    firstname: "foo",    lastname: "bar",    email: "hello@hello"}
