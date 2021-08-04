@@ -1,15 +1,22 @@
 'use strict';
 
 var async = require('async');
+var redisStream = require('redis');
+var User = require('../user/user.js');
 
-var redis = require('redis');
-var redisClient = redis.createClient();
+var redisClient = redisStream.createClient();
 
-const STREAMS_KEY = "weather_sensor:wind";
+const STREAMS_KEY = "simpleMicroservice";
 const APPLICATION_ID = "iot_application:node_1";
 var CONSUMER_ID = "consumer:1"
 
-
+// User.add_user({
+//     firstname: "hello",
+//     lastname: "vvv",
+//     email: "hello@hello.com"
+// }, function(err){
+//     console.log(err);
+// })
 // create the group
 redisClient.xgroup("CREATE", STREAMS_KEY, APPLICATION_ID, '$', function(err) {
     if (err) {
@@ -34,14 +41,21 @@ async.forever(
                 var messages = stream[0][1]; 
                 // print all messages
                 messages.forEach(function(message){
-                    // convert the message into a JSON Object
                     var id = message[0];
                     var values = message[1];
                     var msgObject = { id : id};
                     for (var i = 0 ; i < values.length ; i=i+2) {
                         msgObject[values[i]] = values[i+1];
-                    }                    
-                    console.log( "Message: "+ JSON.stringify(msgObject));
+                    }   
+                User.add_user({
+                    firstname: msgObject.firstname,
+                    lastname: msgObject.lastname,
+                    email: msgObject.email
+                }, function(err){
+                    console.log(err);
+                })
+                                        
+                    
                 });
                 
             } else {
