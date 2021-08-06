@@ -56,14 +56,10 @@ test('input extract message is valid', (done) => {
  })
 
 
-// test('Stream throw error no group', (done) => {
-//    var result =  stream.groupStream("Group")
-    
-//     expect(result.errorCount).th
-//   });
 
-// test("should throw an error if called without a number", () => {
-//     expect(() => {
-//         stream.groupStream("Group")
-//     }).toThrow("You must provide a number");
+// test("Stream without group should return undefined", async  () => {
+    
+//       var dd = await  stream.groupStream("Group")
+//       expect(dd).toThrow('You must provide ');
+
 // })

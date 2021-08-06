@@ -17,13 +17,11 @@ var createGroup =  {
 } 
 
 var groupStream = function(groupName = 'GROUP') {
-    var errorCount = 0
     async.forever(
         function(next) {
             redisClient.xreadgroup(groupName, config.stream.APPLICATION_ID, config.stream.CONSUMER_ID, 'BLOCK', 500, 'STREAMS',  config.stream.STREAMS_KEY , '>', function (err, stream) {
                 if (err) {
-                    console.log(err);
-                    errorCount++;
+                    throw new Error("xreadgroup");
                     next(err);
                 }
     
@@ -42,14 +40,15 @@ var groupStream = function(groupName = 'GROUP') {
                 } else {
                     console.log("No new message...");
                 }
-    
+                
+                console.log(streamCount)
                 next();
             });
         },
         function(err) {
-            console.log(" ERROR " + err);
-            errorCount++;
-            process.exit()
+
+            throw new Error(" ERROR " + err);
+            // process.exit()
         }
     );
     
@@ -72,6 +71,6 @@ var extractMessage = function extractMessage(message) {
 
 module.exports.createGroup = createGroup;
 module.exports.groupStream = groupStream;
-module.exports.groupStream.errorCount = groupStream.errorCount;
+module.exports.groupStream.streamCount = groupStream.streamCount;
 module.exports.extractMessage = extractMessage;
 
