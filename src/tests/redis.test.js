@@ -7,7 +7,7 @@ test('Check redis valid connection', (done) => {
 })
 
 test('check param has valid keys', (done)=> {
-    redisTest.add_set({key: {"id": "hello@hello.com"}, data: {}},  function (resp) {
+    redisTest.add_set({key: {"id": "hello@hello.com"}, data: {"email":"hello@hello.com"}},  function (resp) {
         expect(resp).toBe(true)
      })
      done()
