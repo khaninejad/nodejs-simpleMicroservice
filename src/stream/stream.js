@@ -41,7 +41,6 @@ var groupStream = function(groupName = 'GROUP') {
                     console.log("No new message...");
                 }
                 
-                console.log(streamCount)
                 next();
             });
         },
