@@ -14,17 +14,10 @@ test('check param has valid keys', (done)=> {
     
 })
 
-test('check add_set param has valid keys', (done)=> {
-    redisTest.add_set({key: {"id": "hello@hello.com"}, data: {}},  function (resp) {
-        expect(resp).toBe(true)
-     })
-     done()
-    
-})
 
 test('check get_set param has valid keys', (done)=> {
     redisTest.get_set({"id": "is"}, null, function (resp) {
-        expect(resp).toBe(true)
+        expect(resp).toBe(null)
      })
      redisTest.get_set({"id": ""}, null, function (resp) {
         expect(resp).toBe(false)

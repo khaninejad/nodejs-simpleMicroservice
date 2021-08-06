@@ -17,11 +17,13 @@ var createGroup =  {
 } 
 
 var groupStream = function(groupName = 'GROUP') {
+    var errorCount = 0
     async.forever(
         function(next) {
             redisClient.xreadgroup(groupName, config.stream.APPLICATION_ID, config.stream.CONSUMER_ID, 'BLOCK', 500, 'STREAMS',  config.stream.STREAMS_KEY , '>', function (err, stream) {
                 if (err) {
                     console.log(err);
+                    errorCount++;
                     next(err);
                 }
     
@@ -29,12 +31,11 @@ var groupStream = function(groupName = 'GROUP') {
                     var messages = stream[0][1]; 
                     messages.forEach(function(message){
                          var msgObject = extractMessage(message);   
-                         if (msgObject.email != ""){
                             User.add_user({firstname: msgObject.firstname,lastname: msgObject.lastname, email: msgObject.email}, 
                                 function(err){
                                 console.log(err);
                             });
-                         }
+                     
                         
                     });
                     
@@ -47,6 +48,7 @@ var groupStream = function(groupName = 'GROUP') {
         },
         function(err) {
             console.log(" ERROR " + err);
+            errorCount++;
             process.exit()
         }
     );
@@ -70,5 +72,6 @@ var extractMessage = function extractMessage(message) {
 
 module.exports.createGroup = createGroup;
 module.exports.groupStream = groupStream;
+module.exports.groupStream.errorCount = groupStream.errorCount;
 module.exports.extractMessage = extractMessage;
 

@@ -56,8 +56,14 @@ test('input extract message is valid', (done) => {
  })
 
 
-test('Stream throw error no group', (done) => {
-    stream.groupStream("Group")
-    const consoleSpy = jest.spyOn(console, 'log');
-    expect(consoleSpy).toHaveBeenCalledWith('No new message...');
-  });
+// test('Stream throw error no group', (done) => {
+//    var result =  stream.groupStream("Group")
+    
+//     expect(result.errorCount).th
+//   });
+
+// test("should throw an error if called without a number", () => {
+//     expect(() => {
+//         stream.groupStream("Group")
+//     }).toThrow("You must provide a number");
+// })
