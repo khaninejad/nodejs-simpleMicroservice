@@ -6,7 +6,8 @@
   "scripts": {
     "register": "node src/register/register.js loop=1000 sleep=500",
     "service": "node src/service/accountService.js",
-    "test": "jest --forceExit"
+    "test": "jest --forceExit",
+    "clear": "jest --clearCache"
   },
   "repository": {
     "type": "git",
