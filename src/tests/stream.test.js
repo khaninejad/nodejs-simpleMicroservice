@@ -41,7 +41,7 @@ test('input extract message is valid', (done) => {
        ])
        expect(message).toBe(false)
        var message2 =  stream.extractMessage([
-           '1628276341500-0',
+           '1628276341500-0'
          ])
          expect(message2).toBe(false)
          var message3 =  stream.extractMessage([       
