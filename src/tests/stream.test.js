@@ -38,14 +38,14 @@ test('input extract message is valid', (done) => {
            'lastname',
            'Khaninejad'
          ]
-       ])
+       ]);
        expect(message).toBe(false)
        var message2 =  stream.extractMessage([
            '1628276341500-0'
-         ])
-         expect(message2).toBe(false)
+         ]);
+         expect(message2).toBe(false);
          var message3 =  stream.extractMessage([       
-          ])
+          ]);
           expect(message3).toBe(false)
      done()
  })
