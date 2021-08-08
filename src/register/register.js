@@ -48,13 +48,7 @@ const { email, firstname , lastname} = argv;
 
         console.log(`\tSending message`);
 
-        redisClient.xadd(config.stream.STREAMS_KEY, '*', 
-        'email',email,
-        'firstname',firstname,
-        'lastname',lastname,
-        function (err) { 
-                if (err) { console.log(err) };
-            });
+        SendCommand(email, firstname, lastname);
 
         await sleep(sleep_time);
         process.exit()
@@ -64,3 +58,13 @@ const { email, firstname , lastname} = argv;
 }
 
 main();
+
+function SendCommand(email, firstname, lastname) {
+  redisClient.xadd(config.stream.STREAMS_KEY, '*',
+    'email', email,
+    'firstname', firstname,
+    'lastname', lastname,
+    function (err) {
+      if (err) { console.log(err); };
+    });
+}
