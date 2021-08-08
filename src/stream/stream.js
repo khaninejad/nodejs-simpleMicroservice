@@ -21,7 +21,7 @@ var groupStream = function(groupName = 'GROUP') {
         function(next) {
             redisClient.xreadgroup(groupName, config.stream.APPLICATION_ID, config.stream.CONSUMER_ID, 'BLOCK', 500, 'STREAMS',  config.stream.STREAMS_KEY , '>', function (err, stream) {
                 if (err) {
-                    throw new Error("xreadgroup");
+                    console.log("Unknown Channel");
                     next(err);
                 }
     
@@ -46,8 +46,8 @@ var groupStream = function(groupName = 'GROUP') {
         },
         function(err) {
 
-            throw new Error(" ERROR " + err);
-            // process.exit()
+            console.log("exit Channel");
+             process.exit(1)
         }
     );
     
