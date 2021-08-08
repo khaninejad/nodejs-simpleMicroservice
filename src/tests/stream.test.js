@@ -67,16 +67,17 @@ test("Stream with invalid channel should not exist process", () => {
   expect(mockExit).not.toHaveBeenCalled();
 
 })
-test("Stream Up and running", () => {
+test("Stream Up and running", async () => {
   
   var redisClient = redis.createClient();
-  redisClient.xadd(config.stream.STREAMS_KEY, '*', 
+await  redisClient.xadd(config.stream.STREAMS_KEY, '*', 
   'email',"test@test.com",
   'firstname',"firstname",
   'lastname',"lastname",
   function (err) { 
           if (err) { console.log(err) };
       });
+
        const addMock = jest.spyOn(stream, "groupStream");
        addMock.mockImplementation(() => "No new message...");
       expect(stream.groupStream("Group")).toBe(`No new message...`);
